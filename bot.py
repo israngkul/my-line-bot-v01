@@ -15,7 +15,7 @@ def hello():
 @app.route("/webhook", methods=['GET','POST'])
 def webhook():
     if request.method == 'POST':
-        
+        pass
     return 'OK'
 # get X-Line-Signature header value
 #signature = request.headers['X-Line-Signature']
