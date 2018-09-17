@@ -10,7 +10,7 @@ handler = WebhookHandler('28eb0ef0b53631f1581716b309b1acbb')
 
 @app.route("/")
 def hello():
-    return "Hello AJoy World!"
+    return "Hello AJoy Linebot World!"
 
 @app.route("/webhook", methods=['POST'])
 def webhook():
@@ -27,7 +27,7 @@ def webhook():
     except InvalidSignatureError:
         abort(400)
 
-    return 'OK'
+    return '200'
     
 
 @handler.add(MessageEvent, message=TextMessage)
