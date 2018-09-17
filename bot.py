@@ -10,7 +10,7 @@ handler = WebhookHandler('28eb0ef0b53631f1581716b309b1acbb')
 
 @app.route("/")
 def hello():
-    return "Hello AJoy Linebot v1 World!"
+    return "Hello AJoy Linebot v2 World!"
 
 @app.route("/webhook", methods=['POST','GET'])
 def webhook():
