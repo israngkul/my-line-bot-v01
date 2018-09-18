@@ -33,10 +33,10 @@ def webhook():
     app.logger.info("Request body: " + body)
     result = json.loads(body)
     user_id = result['events'][0]['source']['userId']
-    linenotify(str(body))
+    #linenotify(str(body))
     profile = line_bot_api.get_profile(user_id)
-    linenotify('มีการส่งข้อความจาก -'+ profile.display_name)
-    linenotify(profile.picture_url)
+    linenotify('มีการส่งข้อความจาก -'+ profile.display_name +':\n'+str(body))
+    #linenotify(profile.picture_url)
     #linenotify(profile.status_message)
     # handle webhook body
     try:
