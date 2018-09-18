@@ -32,7 +32,7 @@ def webhook():
     user_id = result['events'][0]['source']['userId']
     linenotify(str(body))
     profile = line_bot_api.get_profile(user_id)
-    linenotify(profile.user_id)
+    linenotify(profile.display_name)
     linenotify(profile.picture_url)
     linenotify(profile.status_message)
     # handle webhook body
@@ -49,9 +49,15 @@ def webhook():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text='BOTตอบกลับ:'+event.message.text))
+    result = json.loads(event)
+    user_id = result['events'][0]['source']['userId']
+    profile = line_bot_api.get_profile(user_id)
+    #linenotify(profile.display_name)
+    #linenotify(profile.picture_url)
+    #line_bot_api.reply_message(event.reply_token,TextSendMessage(text='ข้อความจาก :'+event.message.text))
+    line_bot_api.reply_message(event.reply_token,TextSendMessage(text='ข้อความจาก :'+profile.display_name))
+    line_bot_api.reply_message(event.reply_token,ImageSendMessage(original_content_url=picture_url)
+)
     
 @handler.add(JoinEvent)
 def handle_join(event):
