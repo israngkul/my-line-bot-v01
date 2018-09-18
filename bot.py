@@ -2,6 +2,14 @@ from flask import Flask, request, abort
 from linebot import (LineBotApi, WebhookHandler)
 from linebot.exceptions import (InvalidSignatureError)
 from linebot.models import (MessageEvent, TextMessage, TextSendMessage,JoinEvent)
+import requests
+url = "https://notify-api.line.me/api/notify"
+token = "TBoCEqfOfILQXJ9K9E3Siww01EJne0FKH7fCUz2N5fB"
+headers = {'content-type':'application/x-www-form-urlencoded','Authorization':'Bearer '+token}
+
+def linenotify(msg):
+    global url,headers,token
+    r = requests.post(url,headers=headers, data={'message':msg})
 
 app = Flask(__name__)
 
@@ -19,6 +27,11 @@ def webhook():
     # get request body as text
     body = request.get_data(as_text=True)
     app.logger.info("Request body: " + body)
+    profile = line_bot_api.get_profile(user_id)
+    linenotify(profile.display_name)
+    linenotify(profile.user_id)
+    linenotify(profile.picture_url)
+    linenotify(profile.status_message)
     # handle webhook body
     try:
         handler.handle(body, signature)
