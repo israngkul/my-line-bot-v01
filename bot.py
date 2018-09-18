@@ -27,11 +27,11 @@ def webhook():
     # get request body as text
     body = request.get_data(as_text=True)
     app.logger.info("Request body: " + body)
-    profile = line_bot_api.get_profile(user_id)
-    linenotify(profile.display_name)
-    linenotify(profile.user_id)
-    linenotify(profile.picture_url)
-    linenotify(profile.status_message)
+    #profile = line_bot_api.get_profile(user_id)
+    #linenotify(profile.display_name)
+    #linenotify(profile.user_id)
+    #linenotify(profile.picture_url)
+    #linenotify(profile.status_message)
     # handle webhook body
     try:
         handler.handle(body, signature)
