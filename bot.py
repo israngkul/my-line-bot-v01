@@ -60,7 +60,7 @@ def handle_message(event):
     #linenotify(profile.picture_url)
     #line_bot_api.reply_message(event.reply_token,TextSendMessage(text='ข้อความจาก :'+event.message.text))
     line_bot_api.reply_message(event.reply_token,TextSendMessage(text='ข้อความจาก :'+profile.display_name))
-    line_bot_api.reply_message(event.reply_token,ImageSendMessage(original_content_url=str(profile.picture_url))
+    line_bot_api.reply_message(event.reply_token,TextSendMessage(text= 'ภาพโปร์ไฟล์ของผู้ส่ง:'+profile.picture_url)
 )
     
 @handler.add(JoinEvent)
