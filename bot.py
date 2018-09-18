@@ -36,7 +36,7 @@ def webhook():
     linenotify(str(body))
     profile = line_bot_api.get_profile(user_id)
     linenotify('มีการส่งข้อความจาก -'+ profile.display_name)
-    #linenotify(profile.picture_url)
+    linenotify(profile.picture_url)
     #linenotify(profile.status_message)
     # handle webhook body
     try:
@@ -60,7 +60,7 @@ def handle_message(event):
     #linenotify(profile.picture_url)
     #line_bot_api.reply_message(event.reply_token,TextSendMessage(text='ข้อความจาก :'+event.message.text))
     line_bot_api.reply_message(event.reply_token,TextSendMessage(text='ข้อความจาก :'+profile.display_name))
-    line_bot_api.reply_message(event.reply_token,ImageSendMessage(original_content_url=profile.picture_url)
+    line_bot_api.reply_message(event.reply_token,ImageSendMessage(original_content_url=str(profile.picture_url))
 )
     
 @handler.add(JoinEvent)
