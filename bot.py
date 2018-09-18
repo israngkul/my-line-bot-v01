@@ -29,7 +29,7 @@ def webhook():
     body = request.get_data(as_text=True)
     app.logger.info("Request body: " + body)
     #profile = line_bot_api.get_profile(user_id)
-    linenotify(body)
+    linenotify(str(body))
     #linenotify(profile.user_id)
     #linenotify(profile.picture_url)
     #linenotify(profile.status_message)
