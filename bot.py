@@ -17,12 +17,15 @@ app = Flask(__name__)
 line_bot_api = LineBotApi('LtooZVH2hypDa0NM8b4hy/Cj9tTxaS5WkMnRk959IKbL/8lH80juoRcRV263I3/uj18hz6RShvplHeXFmP5kHLM514LJyQ5gq53gmOmOY1VtN1P8X3FVTl9FkGH8C7ptSnAissMNCs3bgWTe4voeEQdB04t89/1O/w1cDnyilFU=')
 handler = WebhookHandler('28eb0ef0b53631f1581716b309b1acbb')
 
+body = ""
+
 @app.route("/")
 def hello():
     return "Hello AJoy Linebot v2 World!"
 
 @app.route("/webhook", methods=['GET','POST'])
 def webhook():
+    global body
     # get X-Line-Signature header value
     signature = request.headers['X-Line-Signature']
     # get request body as text
@@ -32,9 +35,9 @@ def webhook():
     user_id = result['events'][0]['source']['userId']
     linenotify(str(body))
     profile = line_bot_api.get_profile(user_id)
-    linenotify(profile.display_name)
-    linenotify(profile.picture_url)
-    linenotify(profile.status_message)
+    linenotify('มีการส่งข้อความจาก -'+ profile.display_name)
+    #linenotify(profile.picture_url)
+    #linenotify(profile.status_message)
     # handle webhook body
     try:
         handler.handle(body, signature)
@@ -49,7 +52,8 @@ def webhook():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    result = json.loads(event)
+    global body
+    result = json.loads(body)
     user_id = result['events'][0]['source']['userId']
     profile = line_bot_api.get_profile(user_id)
     #linenotify(profile.display_name)
