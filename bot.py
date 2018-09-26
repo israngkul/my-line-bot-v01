@@ -70,11 +70,8 @@ def handle_message(event):
     #line_bot_api.reply_message(event.reply_token,TextSendMessage(text=profile.display_name+' \nภาพโปร์ไฟล์ของผู้ส่งข้อความ:'+profile.picture_url))
     text = str(event.message.txt)
     words = text.spit()
-    for word in words
+    for word in words:
         linenotify(word)
-
-    
-    
 
 @handler.add(JoinEvent)
 def handle_join(event):
