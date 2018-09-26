@@ -38,9 +38,8 @@ def weather(city):
             resulttext = resulttext+"ทิศทางลม : "+str(item['Observe']['WindDirection']['Value']) +" "+str(item['Observe']['WindDirection']['Unit'])+"\n"
             resulttext = resulttext+"ความชื้นสัมพัทธ์ : "+str(item['Observe']['RelativeHumidity']['Value']) +" "+str(item['Observe']['RelativeHumidity']['Unit'])+"\n"
             found = True
-            continue
-        if found == False:
-            return('ไม่พบชื่อดังกล่าว')
+    if found == False:
+        return('ไม่พบชื่อดังกล่าว')
     return(resulttext)
 
 app = Flask(__name__)
