@@ -102,6 +102,8 @@ def handle_message(event):
             searchtext = words[2]
             res = weather(searchtext)
             line_bot_api.reply_message(event.reply_token,TextSendMessage(text='ตอบกลับ:'+ res))
+        else:
+            line_bot_api.reply_message(event.reply_token,TextSendMessage(text='คำขอไม่ถูกต้อง'))
             
 @handler.add(JoinEvent)
 def handle_join(event):
