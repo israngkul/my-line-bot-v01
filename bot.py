@@ -24,7 +24,7 @@ def weather(city):
     data = json.loads(response.text)
     #d = json.dumps(data).decode('unicode-escape').encode('utf8')
     #thaidata = d
-    searchtext = str(city)
+    searchtext = city
     found = False
     resulttext= "ข้อมูลจากกรมอุตุนิยมวิทยา - "+str(data['Header']['LastBuiltDate']) + "\n"
     for item in data['Stations']:
@@ -93,15 +93,15 @@ def handle_message(event):
     #line_bot_api.reply_message(event.reply_token,TextSendMessage(text=profile.display_name+' \nภาพโปร์ไฟล์ของผู้ส่งข้อความ:'+profile.picture_url))
     text = str(event.message.text)
     words = text.split()
-    linenotify("Message typed:"+str(words))
+    #linenotify("Message typed:"+str(words))
     if words[0] == "@":
         if len(words) < 3:
             line_bot_api.reply_message(event.reply_token,TextSendMessage(text='คำขอไม่ครบถ้วน'))
             return
         if words[1] =="อากาศ" or words[1].upper() == "WEATHER":
-            searchtext = words[2]
+            searchtext = str(words[2])
             res = weather(searchtext)
-            line_bot_api.reply_message(event.reply_token,TextSendMessage(text='ตอบกลับ:'+ res))
+            line_bot_api.reply_message(event.reply_token,TextSendMessage(text='ตอบกลับ:'+ str(res)))
         else:
             line_bot_api.reply_message(event.reply_token,TextSendMessage(text='คำขอไม่ถูกต้อง'))
             
