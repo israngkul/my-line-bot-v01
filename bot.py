@@ -27,7 +27,7 @@ def weather(city):
     searchtext = city
     found = False
     resulttext= "ข้อมูลจากกรมอุตุนิยมวิทยา - "+str(data['Header']['LastBuiltDate']) + "\n"
-    for item in thaidata['Stations']:
+    for item in data['Stations']:
         if searchtext in item["StationNameTh"] or searchtext.upper() in item["StationNameEng"]:
             resulttext = resulttext+"\nสภาพภูมิอากาศ : "+ item['StationNameTh']+"["+item['StationNameEng']+"]\n"
             resulttext = resulttext+"อุณหภูมิปัจจุบัน : "+str(item['Observe']['Temperature']['Value']) +" "+str(item['Observe']['Temperature']['Unit'])+"\n"
