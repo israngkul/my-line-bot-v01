@@ -25,8 +25,8 @@ def  openweather(city):
             resulttext= "ไม่พบชื่อดังกล่าว"
             return(resulttext)
     except KeyError,e:
-        d = json.dumps(data).decode('unicode-escape').encode('utf8')
-        print d
+        #d = json.dumps(data).decode('unicode-escape').encode('utf8')
+        #print d
         resulttext= "ข้อมูลจาก Openweather.org - \n"
         resulttext = resulttext+"\nสภาพภูมิอากาศ : "+ data['name']+" ["+data['sys']['country']+"]\n"
         resulttext = resulttext+"\nปริมาณเมฆ ฝน: "+ data['weather'][0]['description']+"\n"
