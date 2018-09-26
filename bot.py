@@ -24,7 +24,7 @@ def weather(city):
     data = json.loads(response.text)
     #d = json.dumps(data).decode('unicode-escape').encode('utf8')
     #thaidata = d
-    searchtext = city
+    searchtext = str(city)
     found = False
     resulttext= "ข้อมูลจากกรมอุตุนิยมวิทยา - "+str(data['Header']['LastBuiltDate']) + "\n"
     for item in data['Stations']:
