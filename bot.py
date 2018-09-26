@@ -20,8 +20,7 @@ def weather(city):
     querystring = {'uid': 'u61worawit.isr', 'ukey': '766a8cda17410d36dc835300743126d9', 'format':'json'}
     # หรือต้องการ response เป็น XML
     # querystring = {'uid': 'demo', 'ukey': 'demokey'}
-    response = requests.request('GET', url,params=querystring)
-    #print (response.text) # print response
+    response = requests.request('GET', tmdurl,params=querystring)
     data = json.loads(response.text)
     linenotify(str(data))
     #d = json.dumps(data).decode('unicode-escape').encode('utf8')
