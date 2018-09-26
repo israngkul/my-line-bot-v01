@@ -4,9 +4,20 @@ from linebot.exceptions import (InvalidSignatureError)
 from linebot.models import (MessageEvent, TextMessage, TextSendMessage,JoinEvent, ImageSendMessage)
 import json
 import requests
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
+
+
 url = "https://notify-api.line.me/api/notify"
 token = "TBoCEqfOfILQXJ9K9E3Siww01EJne0FKH7fCUz2N5fB"
 headers = {'content-type':'application/x-www-form-urlencoded','Authorization':'Bearer '+token}
+# สำหรับ TMD กรมอุตุนิยมวิทยา API
+tmdurl = 'http://data.tmd.go.th/api/WeatherToday/V1/'
+# response เป็น json
+querystring = {'uid': 'u61worawit.isr', 'ukey': '766a8cda17410d36dc835300743126d9', 'format':'json'}
+# หรือต้องการ response เป็น XML
+# querystring = {'uid': 'demo', 'ukey': 'demokey'}
 
 def linenotify(msg):
     global url,headers,token
@@ -54,11 +65,19 @@ def handle_message(event):
     result = json.loads(body)
     user_id = result['events'][0]['source']['userId']
     profile = line_bot_api.get_profile(user_id)
+    
     #linenotify(profile.display_name)
     #linenotify(profile.picture_url)
     #line_bot_api.reply_message(event.reply_token,TextSendMessage(text='ข้อความจาก :'+event.message.text))
     #line_bot_api.reply_message(event.reply_token,TextSendMessage(text='ข้อความจาก :'+profile.display_name))
     #line_bot_api.reply_message(event.reply_token,TextSendMessage(text=profile.display_name+' \nภาพโปร์ไฟล์ของผู้ส่งข้อความ:'+profile.picture_url))
+    text = event.message.txt
+    words = text.spit()
+    linenotify(words[0])
+    linenotify(words[1])
+    linenotify(words[2])
+    
+    
 
 @handler.add(JoinEvent)
 def handle_join(event):
