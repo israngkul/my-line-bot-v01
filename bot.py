@@ -22,7 +22,6 @@ def weather(city):
     # querystring = {'uid': 'demo', 'ukey': 'demokey'}
     response = requests.request('GET', tmdurl,params=querystring)
     data = json.loads(response.text)
-    linenotify(str(data))
     #d = json.dumps(data).decode('unicode-escape').encode('utf8')
     #thaidata = d
     searchtext = city
