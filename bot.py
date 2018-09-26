@@ -23,8 +23,7 @@ def weather(city):
     response = requests.request('GET', url,params=querystring)
     #print (response.text) # print response
     data = json.loads(response.text)
-    f = open('tmdlog.json',"w")
-    f.write(str(data))
+    linenotify(str(data))
     #d = json.dumps(data).decode('unicode-escape').encode('utf8')
     #thaidata = d
     searchtext = city
@@ -69,7 +68,6 @@ def webhook():
     app.logger.info("Request body: " + body)
     result = json.loads(body)
     user_id = result['events'][0]['source']['userId']
-    #linenotify(str(body))
     profile = line_bot_api.get_profile(user_id)
     linenotify('มีการส่งข้อความจาก -'+ profile.display_name +':\n'+str(body))
     #linenotify(profile.picture_url)
