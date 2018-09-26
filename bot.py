@@ -23,7 +23,8 @@ def weather(city):
     response = requests.request('GET', url,params=querystring)
     #print (response.text) # print response
     data = json.loads(response.text)
-    app.logger.info("TMD API: " + str(data))
+    f = open('tmdlog.json',"w")
+    f.write(data)
     #d = json.dumps(data).decode('unicode-escape').encode('utf8')
     #thaidata = d
     searchtext = city
