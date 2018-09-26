@@ -23,8 +23,8 @@ def weather(city):
     response = requests.request('GET', url,params=querystring)
     #print (response.text) # print response
     data = json.loads(response.text)
-    d = json.dumps(data).decode('unicode-escape').encode('utf8')
-    thaidata = json.loads(d)
+    #d = json.dumps(data).decode('unicode-escape').encode('utf8')
+    thaidata = data
     searchtext = city
     found = False
     resulttext= "ข้อมูลจากกรมอุตุนิยมวิทยา - "+str(thaidata['Header']['LastBuiltDate']) + "\n"
