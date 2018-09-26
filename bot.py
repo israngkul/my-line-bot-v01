@@ -37,8 +37,7 @@ def  openweather(city):
         resulttext = resulttext+"\nทิศทางลม: "+ str(data['wind']['deg'])+" degree\n"
         resulttext = resulttext+"\nความชื้นสัมพัทธ์: "+ str(data['main']['humidity'])+" %\n"
         return(resulttext)
-
-    
+  
 def weather(city):
     # สำหรับ TMD กรมอุตุนิยมวิทยา API
     tmdurl = 'http://data.tmd.go.th/api/WeatherToday/V1/'
@@ -71,7 +70,7 @@ def weather(city):
             count = count + 1
     if found == False:
         resulttext = openweather(searchtext)
-        return(str(searchtext))
+        return(resulttext)
     else:
         return(resulttext)
 
