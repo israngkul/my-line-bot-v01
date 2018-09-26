@@ -38,7 +38,7 @@ def weather(city):
             resulttext = resulttext+"ทิศทางลม : "+str(item['Observe']['WindDirection']['Value']) +" "+str(item['Observe']['WindDirection']['Unit'])+"\n"
             resulttext = resulttext+"ความชื้นสัมพัทธ์ : "+str(item['Observe']['RelativeHumidity']['Value']) +" "+str(item['Observe']['RelativeHumidity']['Unit'])+"\n"
             found = True
-        elif searchtext.upper() in item["StationNameEng"]:
+        if searchtext.upper() in item["StationNameEng"]:
             resulttext = resulttext+"\nสภาพภูมิอากาศ : "+ item['StationNameTh']+" ["+item['StationNameEng']+"]\n"
             resulttext = resulttext+"อุณหภูมิปัจจุบัน : "+str(item['Observe']['Temperature']['Value']) +" "+str(item['Observe']['Temperature']['Unit'])+"\n"
             resulttext = resulttext+"อุณหภูมิสูงสุด : "+str(item['Observe']['MaxTemperature']['Value']) +" "+str(item['Observe']['MaxTemperature']['Unit'])+"\n"
@@ -52,9 +52,6 @@ def weather(city):
             return('ไม่พบชื่อดังกล่าว')
     return(resulttext)
 
-
-    
-    
 app = Flask(__name__)
 
 line_bot_api = LineBotApi('LtooZVH2hypDa0NM8b4hy/Cj9tTxaS5WkMnRk959IKbL/8lH80juoRcRV263I3/uj18hz6RShvplHeXFmP5kHLM514LJyQ5gq53gmOmOY1VtN1P8X3FVTl9FkGH8C7ptSnAissMNCs3bgWTe4voeEQdB04t89/1O/w1cDnyilFU=')
