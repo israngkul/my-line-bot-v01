@@ -24,12 +24,12 @@ def weather(city):
     data = json.loads(response.text)
     #d = json.dumps(data).decode('unicode-escape').encode('utf8')
     #thaidata = d
-    searchtext = city.upper()
+    searchtext = city
     found = False
     resulttext= "ข้อมูลจากกรมอุตุนิยมวิทยา - "+str(data['Header']['LastBuiltDate']) + "\n"
     for item in data['Stations']:
-        if searchtext in item["StationNameTh"] or searchtext in item["StationNameEng"]:
-            resulttext = resulttext+"\nสภาพภูมิอากาศ : "+ item['StationNameTh']+"["+item['StationNameEng']+"]\n"
+        if searchtext in item["StationNameTh"]:
+            resulttext = resulttext+"\nสภาพภูมิอากาศ : "+ item['StationNameTh']+" ["+item['StationNameEng']+"]\n"
             resulttext = resulttext+"อุณหภูมิปัจจุบัน : "+str(item['Observe']['Temperature']['Value']) +" "+str(item['Observe']['Temperature']['Unit'])+"\n"
             resulttext = resulttext+"อุณหภูมิสูงสุด : "+str(item['Observe']['MaxTemperature']['Value']) +" "+str(item['Observe']['MaxTemperature']['Unit'])+"\n"
             resulttext = resulttext+"อุณหภูมิต่ำสุด : "+str(item['Observe']['MinTemperature']['Value']) +" "+str(item['Observe']['MinTemperature']['Unit'])+"\n"
@@ -38,8 +38,18 @@ def weather(city):
             resulttext = resulttext+"ทิศทางลม : "+str(item['Observe']['WindDirection']['Value']) +" "+str(item['Observe']['WindDirection']['Unit'])+"\n"
             resulttext = resulttext+"ความชื้นสัมพัทธ์ : "+str(item['Observe']['RelativeHumidity']['Value']) +" "+str(item['Observe']['RelativeHumidity']['Unit'])+"\n"
             found = True
-    if found == False:
-        return('ไม่พบชื่อดังกล่าว')
+        elif searchtext.upper() in item["StationNameEng"]:
+            resulttext = resulttext+"\nสภาพภูมิอากาศ : "+ item['StationNameTh']+" ["+item['StationNameEng']+"]\n"
+            resulttext = resulttext+"อุณหภูมิปัจจุบัน : "+str(item['Observe']['Temperature']['Value']) +" "+str(item['Observe']['Temperature']['Unit'])+"\n"
+            resulttext = resulttext+"อุณหภูมิสูงสุด : "+str(item['Observe']['MaxTemperature']['Value']) +" "+str(item['Observe']['MaxTemperature']['Unit'])+"\n"
+            resulttext = resulttext+"อุณหภูมิต่ำสุด : "+str(item['Observe']['MinTemperature']['Value']) +" "+str(item['Observe']['MinTemperature']['Unit'])+"\n"
+            resulttext = resulttext+"ปริมาณน้ำฝน : "+str(item['Observe']['Rainfall']['Value']) +" "+str(item['Observe']['Rainfall']['Unit'])+"\n"
+            resulttext = resulttext+"ความเร็วลม : "+str(item['Observe']['WindSpeed']['Value']) +" "+str(item['Observe']['WindSpeed']['Unit'])+"  "
+            resulttext = resulttext+"ทิศทางลม : "+str(item['Observe']['WindDirection']['Value']) +" "+str(item['Observe']['WindDirection']['Unit'])+"\n"
+            resulttext = resulttext+"ความชื้นสัมพัทธ์ : "+str(item['Observe']['RelativeHumidity']['Value']) +" "+str(item['Observe']['RelativeHumidity']['Unit'])+"\n"
+            found = True
+        if found == False:
+            return('ไม่พบชื่อดังกล่าว')
     return(resulttext)
 
 
