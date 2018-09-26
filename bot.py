@@ -68,11 +68,11 @@ def handle_message(event):
     #line_bot_api.reply_message(event.reply_token,TextSendMessage(text='ข้อความจาก :'+event.message.text))
     #line_bot_api.reply_message(event.reply_token,TextSendMessage(text='ข้อความจาก :'+profile.display_name))
     #line_bot_api.reply_message(event.reply_token,TextSendMessage(text=profile.display_name+' \nภาพโปร์ไฟล์ของผู้ส่งข้อความ:'+profile.picture_url))
-    text = event.message.txt
+    text = str(event.message.txt)
     words = text.spit()
-    linenotify(words[0])
-    linenotify(words[1])
-    linenotify(words[2])
+    for word in words
+        linenotify(word)
+
     
     
 
