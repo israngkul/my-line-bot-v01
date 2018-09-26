@@ -24,7 +24,7 @@ def weather(city):
     #print (response.text) # print response
     data = json.loads(response.text)
     f = open('tmdlog.json',"w")
-    f.write(data)
+    f.write(str(data))
     #d = json.dumps(data).decode('unicode-escape').encode('utf8')
     #thaidata = d
     searchtext = city
