@@ -58,9 +58,8 @@ def handle_message(event):
     #linenotify(profile.picture_url)
     #line_bot_api.reply_message(event.reply_token,TextSendMessage(text='ข้อความจาก :'+event.message.text))
     #line_bot_api.reply_message(event.reply_token,TextSendMessage(text='ข้อความจาก :'+profile.display_name))
-    #line_bot_api.reply_message(event.reply_token,TextSendMessage(text=profile.display_name+' \nภาพโปร์ไฟล์ของผู้ส่งข้อความ:'+profile.picture_url)
-)
-    
+    #line_bot_api.reply_message(event.reply_token,TextSendMessage(text=profile.display_name+' \nภาพโปร์ไฟล์ของผู้ส่งข้อความ:'+profile.picture_url))
+
 @handler.add(JoinEvent)
 def handle_join(event):
     wplog.logger.info("Got join event")
