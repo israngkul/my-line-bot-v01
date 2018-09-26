@@ -24,11 +24,11 @@ def weather(city):
     data = json.loads(response.text)
     #d = json.dumps(data).decode('unicode-escape').encode('utf8')
     #thaidata = d
-    searchtext = city
+    searchtext = city.upper()
     found = False
     resulttext= "ข้อมูลจากกรมอุตุนิยมวิทยา - "+str(data['Header']['LastBuiltDate']) + "\n"
     for item in data['Stations']:
-        if searchtext in item["StationNameTh"] or searchtext.upper() in item["StationNameEng"]:
+        if searchtext in item["StationNameTh"] or searchtext in item["StationNameEng"]:
             resulttext = resulttext+"\nสภาพภูมิอากาศ : "+ item['StationNameTh']+"["+item['StationNameEng']+"]\n"
             resulttext = resulttext+"อุณหภูมิปัจจุบัน : "+str(item['Observe']['Temperature']['Value']) +" "+str(item['Observe']['Temperature']['Unit'])+"\n"
             resulttext = resulttext+"อุณหภูมิสูงสุด : "+str(item['Observe']['MaxTemperature']['Value']) +" "+str(item['Observe']['MaxTemperature']['Unit'])+"\n"
