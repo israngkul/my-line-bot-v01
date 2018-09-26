@@ -48,8 +48,6 @@ def webhook():
         pass
     return '200 OK'
 
-
-
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     global body
