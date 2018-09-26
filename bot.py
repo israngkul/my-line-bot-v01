@@ -4,10 +4,6 @@ from linebot.exceptions import (InvalidSignatureError)
 from linebot.models import (MessageEvent, TextMessage, TextSendMessage,JoinEvent, ImageSendMessage)
 import json
 import requests
-import sys
-reload(sys)
-sys.setdefaultencoding('utf-8')
-
 
 url = "https://notify-api.line.me/api/notify"
 token = "TBoCEqfOfILQXJ9K9E3Siww01EJne0FKH7fCUz2N5fB"
@@ -61,7 +57,8 @@ def webhook():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    global body
+    global body,tmdurl,querystring
+  
     result = json.loads(body)
     user_id = result['events'][0]['source']['userId']
     profile = line_bot_api.get_profile(user_id)
