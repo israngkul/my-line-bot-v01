@@ -62,13 +62,14 @@ def handle_message(event):
     result = json.loads(body)
     user_id = result['events'][0]['source']['userId']
     profile = line_bot_api.get_profile(user_id)
-    text = result['events'][0]['message']['text']
+    #text = str(result['events'][0]['message']['text'])
     #linenotify(profile.display_name)
     #linenotify(profile.picture_url)
     #line_bot_api.reply_message(event.reply_token,TextSendMessage(text='ข้อความจาก :'+event.message.text))
     #line_bot_api.reply_message(event.reply_token,TextSendMessage(text='ข้อความจาก :'+profile.display_name))
     #line_bot_api.reply_message(event.reply_token,TextSendMessage(text=profile.display_name+' \nภาพโปร์ไฟล์ของผู้ส่งข้อความ:'+profile.picture_url))
-    words = str(text).spit()
+    text = str(event.message.text)
+    words = text.split()
     for word in words:
         linenotify(word)
 
