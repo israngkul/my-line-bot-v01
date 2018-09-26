@@ -13,6 +13,32 @@ def linenotify(msg):
     global url,headers,token
     r = requests.post(url,headers=headers, data={'message':msg})
 
+def  openweather(city):
+    key = 'b088ff769dfd7ce58868390c0009532c'
+    openurl='http://api.openweathermap.org/data/2.5/weather'
+    querystring = {'q': city, 'appid': key, 'units':'metric','format':'json'}
+    response = requests.request('GET', openurl,params=querystring)
+    data = json.loads(response.text)
+    resulttext=""
+    try:
+        if data['message']:
+            resulttext= "ไม่พบชื่อดังกล่าว"
+            return(resulttext)
+    except KeyError,e:
+        d = json.dumps(data).decode('unicode-escape').encode('utf8')
+        print d
+        resulttext= "ข้อมูลจาก Openweather.org - \n"
+        resulttext = resulttext+"\nสภาพภูมิอากาศ : "+ data['name']+" ["+data['sys']['country']+"]\n"
+        resulttext = resulttext+"\nปริมาณเมฆ ฝน: "+ data['weather'][0]['description']+"\n"
+        resulttext = resulttext+"\nอุณหภูมิปัจจุบัน: "+ str(data['main']['temp'])+" Celsius\n"
+        resulttext = resulttext+"\nอุณหภูมิสูงสุด: "+ str(data['main']['temp_max'])+" Celsius\n"
+        resulttext = resulttext+"\nอุณหภูมิต่ำสุด: "+ str(data['main']['temp_min'])+" Celsius\n"
+        resulttext = resulttext+"\nความเร็วลม: "+ str(data['wind']['speed'])+" km/h\n"
+        resulttext = resulttext+"\nทิศทางลม: "+ str(data['wind']['deg'])+" degree\n"
+        resulttext = resulttext+"\nความชื้นสัมพัทธ์: "+ str(data['main']['humidity'])+" %\n"
+        return(resulttext)
+
+    
 def weather(city):
     # สำหรับ TMD กรมอุตุนิยมวิทยา API
     tmdurl = 'http://data.tmd.go.th/api/WeatherToday/V1/'
@@ -44,7 +70,8 @@ def weather(city):
             found = True
             count = count + 1
     if found == False:
-        return('ไม่พบชื่อดังกล่าว')
+        resulttext = openweather(searchtext)
+        return(str(searchtext))
     else:
         return(resulttext)
 
