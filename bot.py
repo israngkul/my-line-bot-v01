@@ -95,12 +95,14 @@ def handle_message(event):
     #line_bot_api.reply_message(event.reply_token,TextSendMessage(text=profile.display_name+' \nภาพโปร์ไฟล์ของผู้ส่งข้อความ:'+profile.picture_url))
     text = str(event.message.text)
     words = text.split()
-    if word[0] == "@":
-        if word[1] =="อากาศ" or word[1].upper() == "WEATHER":
-            searchtext = word[2]
+    if words[0] == "@":
+        if len(words) < 3:
+            line_bot_api.reply_message(event.reply_token,TextSendMessage(text='คำขอไม่ครบถ้วน'))
+            return
+        if words[1] =="อากาศ" or words[1].upper() == "WEATHER":
+            searchtext = words[2]
             res = weather(searchtext)
             line_bot_api.reply_message(event.reply_token,TextSendMessage(text='ตอบกลับ:'+ res))
-            
             
 @handler.add(JoinEvent)
 def handle_join(event):
