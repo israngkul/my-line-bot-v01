@@ -28,7 +28,10 @@ def weather(city):
     #linenotify('keywords:'+searchtext+" "+searchtext.upper())
     found = False
     resulttext= "ข้อมูลจากกรมอุตุนิยมวิทยา - "+str(data['Header']['LastBuiltDate']) + "\n"
+    count = 0
     for item in data['Stations']:
+        if count > 5:
+            break
         if searchtext in item["StationNameTh"] or searchtext.upper() in item["StationNameEng"]:
             resulttext = resulttext+"\nสภาพภูมิอากาศ : "+ item['StationNameTh']+" ["+item['StationNameEng']+"]\n"
             resulttext = resulttext+"อุณหภูมิปัจจุบัน : "+str(item['Observe']['Temperature']['Value']) +" "+str(item['Observe']['Temperature']['Unit'])+"\n"
@@ -39,6 +42,7 @@ def weather(city):
             resulttext = resulttext+"ทิศทางลม : "+str(item['Observe']['WindDirection']['Value']) +" "+str(item['Observe']['WindDirection']['Unit'])+"\n"
             resulttext = resulttext+"ความชื้นสัมพัทธ์ : "+str(item['Observe']['RelativeHumidity']['Value']) +" "+str(item['Observe']['RelativeHumidity']['Unit'])+"\n"
             found = True
+            count = count + 1
     if found == False:
         return('ไม่พบชื่อดังกล่าว')
     else:
