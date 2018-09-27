@@ -157,6 +157,8 @@ def handle_message(event):
             searchtext = words[2]
             res = weather(searchtext)
             line_bot_api.reply_message(event.reply_token,TextSendMessage(text=str(res)))
+        elif words[1].upper() == "HELP":
+            line_bot_api.reply_message(event.reply_token,TextSendMessage(text="ตรวจสอบอากาศ:\n @ อากาศ(หรือ weather) {ชื่อเมือง}\nดูอัตราแลกเปลี่ยนสกุลเงิน:\n @ exchange {สกุลเงิน}))
         elif words[1].upper() == "EXCHANGE":
             currencies = "USD GBP EUR JPY HKD MYR SGD BND PHP IDR INR CHF AUD NZD CAD SEK DKK NOK CNY MXN ZAR KRW TWD KWD SAR AED MMK BDT CZK KHR KES LAK RUB VND EGP PLN LKR IQD BHD OMR JOD QAR MVR PGK ILS HUF PKR"
             if not(words[2].upper() in currencies):
