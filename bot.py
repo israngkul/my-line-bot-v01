@@ -76,7 +76,8 @@ def weather(city):
         return(resulttext)
 
 def exchange(currency):
-    t = datetime.date.today() -datetime.timedelta(1)
+    linenotify("Currency Called")
+    t = datetime.date.today()-datetime.timedelta(1)
     conn = http.client.HTTPSConnection("apigw1.bot.or.th")
     headers = {'x-ibm-client-id': "fece3acb-3332-4d9f-8fd0-8598740c684b",'accept': "application/json"}
     conn.request("GET", "/bot/public/Stat-ExchangeRate/v2/DAILY_AVG_EXG_RATE/?start_period="+str(t)+"&end_period="+str(t)+"&currency="+str(currency), headers=headers)
@@ -155,7 +156,7 @@ def handle_message(event):
         if words[1] =="อากาศ" or words[1].upper() == "WEATHER":
             searchtext = words[2]
             res = weather(searchtext)
-            line_bot_api.reply_message(event.reply_token,TextSendMessage(text='ตอบกลับ:'+ str(res)))
+            line_bot_api.reply_message(event.reply_token,TextSendMessage(text=str(res)))
         elif words[1].upper() == "EXCHANGE":
             currencies = "USD GBP EUR JPY HKD MYR SGD BND PHP IDR INR CHF AUD NZD CAD SEK DKK NOK CNY MXN ZAR KRW TWD KWD SAR AED MMK BDT CZK KHR KES LAK RUB VND EGP PLN LKR IQD BHD OMR JOD QAR MVR PGK ILS HUF PKR"
             if not(words[2].upper() in currencies):
