@@ -123,7 +123,16 @@ def webhook():
     result = json.loads(body)
     user_id = result['events'][0]['source']['userId']
     profile = line_bot_api.get_profile(user_id)
-    linenotify('มีการส่งข้อความจาก -'+ profile.display_name +':\n'+str(body))
+    msgtext = "event type:"+result['events'][0]['type'] + "\n"
+    if result['events'][0]['source']['type'] == "user":
+        msgtext = msgtext + "User: " + profile.display_name + "\n"
+    elif result['events'][0]['source']['type'] == "group":
+        group_id = result['events'][0]['source']['groupId']
+        profile = line_bot_api.get_profile(group_id)
+        msgtext = msgtext + "group ID: " + str(group_id) + "\n"
+        msgtext = msgtext + "group name: " + profile.display_name + "\n"
+    msgtext = msgtext + "message: " + str(result['events'][0]['message']['text'])
+    linenotify(msgtext)
     #linenotify(profile.picture_url)
     #linenotify(profile.status_message)
     # handle webhook body
