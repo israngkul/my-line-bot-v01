@@ -150,7 +150,7 @@ def handle_message(event):
     words = text.split()
     #linenotify("Message typed:"+str(words))
     if words[0] == "@":
-        if len(words) < 3:
+        if len(words) < 2:
             line_bot_api.reply_message(event.reply_token,TextSendMessage(text='คำขอไม่ครบถ้วน ลอง @ help'))
             return
         if words[1] =="อากาศ" or words[1].upper() == "WEATHER":
