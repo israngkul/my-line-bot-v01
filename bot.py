@@ -4,6 +4,7 @@ from linebot.exceptions import (InvalidSignatureError)
 from linebot.models import (MessageEvent, TextMessage, TextSendMessage,JoinEvent, ImageSendMessage)
 import json
 import requests
+import http.client
 
 url = "https://notify-api.line.me/api/notify"
 token = "TBoCEqfOfILQXJ9K9E3Siww01EJne0FKH7fCUz2N5fB"
@@ -74,6 +75,30 @@ def weather(city):
     else:
         return(resulttext)
 
+def exchange(currency):
+    t = datetime.date.today() -datetime.timedelta(1)
+    conn = http.client.HTTPSConnection("apigw1.bot.or.th")
+    headers = {'x-ibm-client-id': "fece3acb-3332-4d9f-8fd0-8598740c684b",'accept': "application/json"}
+    conn.request("GET", "/bot/public/Stat-ExchangeRate/v2/DAILY_AVG_EXG_RATE/?start_period="+str(t)+"&end_period="+str(t)+"&currency="+str(currency), headers=headers)
+    res = conn.getresponse()
+    data = res.read()
+    rate = json.loads(data)
+    #print(data.decode("utf-8"))
+    resulttext = "\nTime Stamp :"+str(rate['result']['timestamp'])+"\n"
+    resulttext = resulttext+ str(rate['result']['data']['data_header']['report_name_th'])+"\n"
+    resulttext = resulttext+ str(rate['result']['data']['data_header']['report_uoq_name_th'])+"\n"
+    resulttext = resulttext+ str(rate['result']['data']['data_header']['report_source_of_data'][0]['source_of_data_th'])+"\n"
+    resulttext = resulttext+ "สกุลเงิน - "+str(rate['result']['data']['data_detail'][0]['currency_name_eng']+" "+str(rate['result']['data']['data_detail'][0]['currency_name_th'])
+    # อัตราขายถั่วเฉลี่ย
+    resulttext = resulttext+ "อัตราขายถั่วเฉลี่ย : "+str(rate['result']['data']['data_detail'][0]['selling'])+"\n"
+    # อัตราซื้อ ตั๋วเงิน
+    resulttext = resulttext+ "อัตราซื้อ ตั๋วเงิน Buying Sight : "+str(rate['result']['data']['data_detail'][0]['buying_sight'])+"\n"
+    # อัตราซื้อ เงินโอน
+    resulttext = resulttext+ "อัตราซื้อ เงินโอน Buying Transfer : "+str(rate['result']['data']['data_detail'][0]['buying_transfer'])+"\n"
+    # อัตราขายถั่วเฉลี่ยถ่วงน้ำหนักระหว่างธนาคาร
+    resulttext = resulttext+ "อัตราขายถั่วเฉลี่ยถ่วงน้ำหนักระหว่างธนาคาร Mid Rate: "+str(rate['result']['data']['data_detail'][0]['mid_rate'])+"\n"
+    return(resulttext)
+                                               
 app = Flask(__name__)
 
 line_bot_api = LineBotApi('LtooZVH2hypDa0NM8b4hy/Cj9tTxaS5WkMnRk959IKbL/8lH80juoRcRV263I3/uj18hz6RShvplHeXFmP5kHLM514LJyQ5gq53gmOmOY1VtN1P8X3FVTl9FkGH8C7ptSnAissMNCs3bgWTe4voeEQdB04t89/1O/w1cDnyilFU=')
@@ -125,12 +150,19 @@ def handle_message(event):
     #linenotify("Message typed:"+str(words))
     if words[0] == "@":
         if len(words) < 3:
-            line_bot_api.reply_message(event.reply_token,TextSendMessage(text='คำขอไม่ครบถ้วน'))
+            line_bot_api.reply_message(event.reply_token,TextSendMessage(text='คำขอไม่ครบถ้วน ลอง @ help'))
             return
         if words[1] =="อากาศ" or words[1].upper() == "WEATHER":
             searchtext = words[2]
             res = weather(searchtext)
             line_bot_api.reply_message(event.reply_token,TextSendMessage(text='ตอบกลับ:'+ str(res)))
+        elif words[1] == "exchange":
+            currencies = "USD GBP EUR JPY HKD MYR SGD BND PHP IDR INR CHF AUD NZD CAD SEK DKK NOK CNY MXN ZAR KRW TWD KWD SAR AED MMK BDT CZK KHR KES LAK RUB VND EGP PLN LKR IQD BHD OMR JOD QAR MVR PGK ILS HUF PKR"
+            if not(words[2] in currencies):
+                cur = " สหรัฐอเมริกา USD\n สหราชอาณาจักร GBP\n ยูโรโซน EUR\n ญี่ปุ่น(ต่อ 100เยน) JPY\n ฮ่องกง HKD\n มาเลเซีย MYR\n สิงคโปร์ SGD\n บรูไน BND\n ฟิลิปปินส์ PHP\n อินโดนิเซีย(ต่อ 1000 รูเปีย) IDR\n อินเดีย INR\n สวิตเซอร์แลนด์ CHF\n ออสเตรเลีย AUD\n นิวซีแลนด์ NZD\n แคนนาดา CAD\n สวีเดน SEK\n เดนมาร์ก DKK\n นอร์เวย์ NOK\n จีน CNY\n เม็กซิโก MXN\n แอฟริกาใต้ ZAR\n เกาหลีใต้ KRW\n ไต้หวัน TWD\n คูเวต KWD\n ซาดุดิอาระเบีย SAR\n สหรัฐอาหรับเอมิเรตส์ AED\n พม่า MMK\n บังกลาเทศ BDT\n สาธารณรัฐเช็ก CZK\n กัมพูชา(ต่อ 100 เรียล) KHR\n เคนยา KES\n ลาว(ต่อ 100 กีบ) LAK\n รัสเซีย RUB\n เวียดนาม(ต่อ 100 ดอง) VND\n อียิปต์ EGP\n โปแลนด์ PLN\n ศรีลังกา LKR\n อีรัก IQD\n บาห์เรน BHD\n โอมาน OMR\n จอร์แดน JOD\n กาตาร์ QAR\n มัลดีฟล์ MVR\n เนปาล NPR\n ปาปัวนิวกินี PGK\n อิสราเอล ILS\n ฮังการี HUF\n ปากีสถาน PKR\n"
+                line_bot_api.reply_message(event.reply_token,TextSendMessage(text='สกุลเงิน ที่ใช้ได้ 3 ตัวอักษร:\n'+ str(cur))
+            searchtext = words[2]
+            resulttext = exchange(searchtext)
         else:
             line_bot_api.reply_message(event.reply_token,TextSendMessage(text='คำขอไม่ถูกต้อง'))
             
