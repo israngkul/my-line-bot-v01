@@ -119,20 +119,21 @@ def webhook():
     signature = request.headers['X-Line-Signature']
     # get request body as text
     body = request.get_data(as_text=True)
-    app.logger.info("Request body: " + body)
+    #app.logger.info("Request body: " + body)
     result = json.loads(body)
     user_id = result['events'][0]['source']['userId']
     profile = line_bot_api.get_profile(user_id)
-    msgtext = "\nevent type:"+result['events'][0]['type'] + "\n"
+    msgtext = "\nEvent type:"+result['events'][0]['type'] + "\n"
     if result['events'][0]['source']['type'] == "user":
-        msgtext = msgtext + "User: " + profile.display_name + "\n"
+        msgtext = msgtext + "User ID: " + str(user_id) + "\n"
+        msgtext = msgtext + "User Name: " + profile.display_name + "\n"
     elif result['events'][0]['source']['type'] == "group" or result['events'][0]['source']['type'] == "room":
         linenotify("group detected")
         group_id = str(result['events'][0]['source']['groupId'])
-        profile = line_bot_api.get_profile(group_id)
-        msgtext = msgtext + "group ID: " + str(group_id) + "\n"
-        msgtext = msgtext + "group name: " + str(profile.display_name) + "\n"
-    msgtext = msgtext + "message: " + str(result['events'][0]['message']['text'])
+        profile = line_bot_api.get_group_member_profile(group_id,user_id)
+        msgtext = msgtext + "Group ID: " + str(group_id) + "\n"
+        msgtext = msgtext + "Group Name: " + str(profile.display_name) + "\n"
+    msgtext = msgtext + "message: " + str(result['events'][0]['message'])
     linenotify(msgtext)
     #linenotify(profile.picture_url)
     #linenotify(profile.status_message)
