@@ -123,14 +123,15 @@ def webhook():
     result = json.loads(body)
     user_id = result['events'][0]['source']['userId']
     profile = line_bot_api.get_profile(user_id)
-    msgtext = "event type:"+result['events'][0]['type'] + "\n"
+    msgtext = "\nevent type:"+result['events'][0]['type'] + "\n"
     if result['events'][0]['source']['type'] == "user":
         msgtext = msgtext + "User: " + profile.display_name + "\n"
-    elif result['events'][0]['source']['type'] == "group":
-        group_id = result['events'][0]['source']['groupId']
+    elif result['events'][0]['source']['type'] == "group" or result['events'][0]['source']['type'] == "room":
+        linenotify("group detected")
+        group_id = str(result['events'][0]['source']['groupId'])
         profile = line_bot_api.get_profile(group_id)
         msgtext = msgtext + "group ID: " + str(group_id) + "\n"
-        msgtext = msgtext + "group name: " + profile.display_name + "\n"
+        msgtext = msgtext + "group name: " + str(profile.display_name) + "\n"
     msgtext = msgtext + "message: " + str(result['events'][0]['message']['text'])
     linenotify(msgtext)
     #linenotify(profile.picture_url)
