@@ -86,10 +86,10 @@ def exchange(currency):
     data = res.read()
     rate = json.loads(data)
     #linenotify(str(data.decode("utf-8")))
-    resulttext = "\nTime Stamp :"+str(rate['result']['timestamp'])+"\n"
+    resulttext = "ที่มาของข้อมูลตอบกลับ ณ เวลา :"+str(rate['result']['timestamp'])+"\n"
     resulttext = resulttext+ str(rate['result']['data']['data_header']['report_name_th'])+"\n"
     resulttext = resulttext+ str(rate['result']['data']['data_header']['report_uoq_name_th'])+"\n"
-    resulttext = resulttext+ str(rate['result']['data']['data_header']['report_source_of_data'][0]['source_of_data_th'])+"\n"
+    resulttext = resulttext+ "แหล่งข้อมูลจาก : "str(rate['result']['data']['data_header']['report_source_of_data'][0]['source_of_data_th'])+"\n"
     resulttext = resulttext+ "สกุลเงิน - "+str(rate['result']['data']['data_detail'][0]['currency_name_eng'])+" "+str(rate['result']['data']['data_detail'][0]['currency_name_th'])+"\n"
     # อัตราขายถั่วเฉลี่ย
     resulttext = resulttext+ "อัตราขายถั่วเฉลี่ย : "+str(rate['result']['data']['data_detail'][0]['selling'])+"\n"
