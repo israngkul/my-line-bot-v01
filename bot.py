@@ -29,13 +29,13 @@ def  openweather(city):
         #print d
         resulttext= "ข้อมูลจาก Openweather.org - \n"
         resulttext = resulttext+"\nสภาพภูมิอากาศ : "+ data['name']+" ["+data['sys']['country']+"]\n"
-        resulttext = resulttext+"\nปริมาณเมฆ ฝน: "+ data['weather'][0]['description']+"\n"
-        resulttext = resulttext+"\nอุณหภูมิปัจจุบัน: "+ str(data['main']['temp'])+" Celsius\n"
-        resulttext = resulttext+"\nอุณหภูมิสูงสุด: "+ str(data['main']['temp_max'])+" Celsius\n"
-        resulttext = resulttext+"\nอุณหภูมิต่ำสุด: "+ str(data['main']['temp_min'])+" Celsius\n"
-        resulttext = resulttext+"\nความเร็วลม: "+ str(data['wind']['speed'])+" km/h\n"
-        resulttext = resulttext+"\nทิศทางลม: "+ str(data['wind']['deg'])+" degree\n"
-        resulttext = resulttext+"\nความชื้นสัมพัทธ์: "+ str(data['main']['humidity'])+" %\n"
+        resulttext = resulttext+"ปริมาณเมฆ ฝน: "+ data['weather'][0]['description']+"\n"
+        resulttext = resulttext+"อุณหภูมิปัจจุบัน: "+ str(data['main']['temp'])+" Celsius\n"
+        resulttext = resulttext+"อุณหภูมิสูงสุด: "+ str(data['main']['temp_max'])+" Celsius\n"
+        resulttext = resulttext+"อุณหภูมิต่ำสุด: "+ str(data['main']['temp_min'])+" Celsius\n"
+        resulttext = resulttext+"ความเร็วลม: "+ str(data['wind']['speed'])+" km/h\n"
+        resulttext = resulttext+"ทิศทางลม: "+ str(data['wind']['deg'])+" degree\n"
+        resulttext = resulttext+"ความชื้นสัมพัทธ์: "+ str(data['main']['humidity'])+" %\n"
         return(resulttext)
   
 def weather(city):
