@@ -192,7 +192,7 @@ def handle_message(event):
                 searchtext = words[2]
                 res = exchange(searchtext.upper())
                 stickerid = randint(100,139)
-                #linenotify(str(stickerid))
+                #linenotify(str(stickerid)) XXXX
                 line_bot_api.reply_message(event.reply_token,[TextSendMessage(text=str(res)),StickerSendMessage(package_id='1', sticker_id=str(stickerid))])
         else:
             line_bot_api.reply_message(event.reply_token,[TextSendMessage(text='คำขอไม่ถูกต้อง'),StickerSendMessage(package_id='4', sticker_id='295')])
