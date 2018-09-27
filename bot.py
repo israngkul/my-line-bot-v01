@@ -88,7 +88,7 @@ def exchange(currency):
     resulttext = resulttext+ str(rate['result']['data']['data_header']['report_name_th'])+"\n"
     resulttext = resulttext+ str(rate['result']['data']['data_header']['report_uoq_name_th'])+"\n"
     resulttext = resulttext+ str(rate['result']['data']['data_header']['report_source_of_data'][0]['source_of_data_th'])+"\n"
-    resulttext = resulttext+ "สกุลเงิน - "+str(rate['result']['data']['data_detail'][0]['currency_name_eng']+" "+str(rate['result']['data']['data_detail'][0]['currency_name_th'])
+    resulttext = resulttext+ "สกุลเงิน - "+str(rate['result']['data']['data_detail'][0]['currency_name_eng'])+" "+str(rate['result']['data']['data_detail'][0]['currency_name_th'])+"\n"
     # อัตราขายถั่วเฉลี่ย
     resulttext = resulttext+ "อัตราขายถั่วเฉลี่ย : "+str(rate['result']['data']['data_detail'][0]['selling'])+"\n"
     # อัตราซื้อ ตั๋วเงิน
@@ -156,7 +156,7 @@ def handle_message(event):
             searchtext = words[2]
             res = weather(searchtext)
             line_bot_api.reply_message(event.reply_token,TextSendMessage(text='ตอบกลับ:'+ str(res)))
-        elif words[1] == "exchange":
+        elif words[1].upper() == "EXCHANGE":
             currencies = "USD GBP EUR JPY HKD MYR SGD BND PHP IDR INR CHF AUD NZD CAD SEK DKK NOK CNY MXN ZAR KRW TWD KWD SAR AED MMK BDT CZK KHR KES LAK RUB VND EGP PLN LKR IQD BHD OMR JOD QAR MVR PGK ILS HUF PKR"
             if not(words[2] in currencies):
                 cur = " สหรัฐอเมริกา USD\n สหราชอาณาจักร GBP\n ยูโรโซน EUR\n ญี่ปุ่น(ต่อ 100เยน) JPY\n ฮ่องกง HKD\n มาเลเซีย MYR\n สิงคโปร์ SGD\n บรูไน BND\n ฟิลิปปินส์ PHP\n อินโดนิเซีย(ต่อ 1000 รูเปีย) IDR\n อินเดีย INR\n สวิตเซอร์แลนด์ CHF\n ออสเตรเลีย AUD\n นิวซีแลนด์ NZD\n แคนนาดา CAD\n สวีเดน SEK\n เดนมาร์ก DKK\n นอร์เวย์ NOK\n จีน CNY\n เม็กซิโก MXN\n แอฟริกาใต้ ZAR\n เกาหลีใต้ KRW\n ไต้หวัน TWD\n คูเวต KWD\n ซาดุดิอาระเบีย SAR\n สหรัฐอาหรับเอมิเรตส์ AED\n พม่า MMK\n บังกลาเทศ BDT\n สาธารณรัฐเช็ก CZK\n กัมพูชา(ต่อ 100 เรียล) KHR\n เคนยา KES\n ลาว(ต่อ 100 กีบ) LAK\n รัสเซีย RUB\n เวียดนาม(ต่อ 100 ดอง) VND\n อียิปต์ EGP\n โปแลนด์ PLN\n ศรีลังกา LKR\n อีรัก IQD\n บาห์เรน BHD\n โอมาน OMR\n จอร์แดน JOD\n กาตาร์ QAR\n มัลดีฟล์ MVR\n เนปาล NPR\n ปาปัวนิวกินี PGK\n อิสราเอล ILS\n ฮังการี HUF\n ปากีสถาน PKR\n"
