@@ -35,7 +35,7 @@ def webhook():
 def handle_message(event):
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text=event.message.text))
+        TextSendMessage(text='BOT say:'+event.message.text))
     
 @handler.add(JoinEvent)
 def handle_join(event):
