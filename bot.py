@@ -2,6 +2,8 @@ from flask import Flask, request, abort
 from linebot import (LineBotApi, WebhookHandler)
 from linebot.exceptions import (InvalidSignatureError)
 from linebot.models import (MessageEvent, TextMessage, TextSendMessage,JoinEvent, ImageSendMessage)
+from random import seed
+from random import randint
 import json
 import requests
 import datetime
@@ -10,7 +12,7 @@ import http.client
 url = "https://notify-api.line.me/api/notify"
 token = "TBoCEqfOfILQXJ9K9E3Siww01EJne0FKH7fCUz2N5fB"
 headers = {'content-type':'application/x-www-form-urlencoded','Authorization':'Bearer '+token}
-
+seed(1)
 def linenotify(msg):
     global url,headers,token
     r = requests.post(url,headers=headers, data={'message':msg})
@@ -128,7 +130,7 @@ def webhook():
         msgtext = msgtext + "User ID: " + str(user_id) + "\n"
         msgtext = msgtext + "User Name: " + profile.display_name + "\n"
     elif result['events'][0]['source']['type'] == "group" or result['events'][0]['source']['type'] == "room":
-        linenotify("group detected")
+        #linenotify("group detected")
         msgtext = msgtext + "User ID: " + str(user_id) + "\n"
         msgtext = msgtext + "User Name: " + profile.display_name + "\n"
         group_id = str(result['events'][0]['source']['groupId'])
@@ -165,29 +167,32 @@ def handle_message(event):
     #linenotify("Message typed:"+str(words))
     if words[0] == "@":
         if len(words) < 2:
-            line_bot_api.reply_message(event.reply_token,TextSendMessage(text='คำขอไม่ครบถ้วน ลอง @ help'))
+            line_bot_api.reply_message(event.reply_token,[TextSendMessage(text='คำขอไม่ครบถ้วน ลอง @ help'),StickerSendMessage(package_id='1', sticker_id='101')])
             return
         if words[1].upper() == "HELP":
-            line_bot_api.reply_message(event.reply_token,TextSendMessage(text="ตรวจสอบอากาศ:\n @ อากาศ(หรือ weather) {ชื่อเมือง}\nดูอัตราแลกเปลี่ยนสกุลเงิน:\n @ exchange {สกุลเงิน}"))
+            line_bot_api.reply_message(event.reply_token,[TextSendMessage(text="ตรวจสอบอากาศ:\n @ อากาศ(หรือ weather) {ชื่อเมือง}\nดูอัตราแลกเปลี่ยนสกุลเงิน:\n @ exchange {สกุลเงิน}"),StickerSendMessage(package_id='1', sticker_id='402')])
             return
         if len(words) < 3:
-            line_bot_api.reply_message(event.reply_token,TextSendMessage(text='คำขอไม่ครบถ้วน ลอง @ help'))
+            line_bot_api.reply_message(event.reply_token,[TextSendMessage(text='คำขอไม่ครบถ้วน ลอง @ help'),StickerSendMessage(package_id='1', sticker_id='104')])
             return
         if words[1] =="อากาศ" or words[1].upper() == "WEATHER":
             searchtext = words[2]
             res = weather(searchtext)
-            line_bot_api.reply_message(event.reply_token,TextSendMessage(text=str(res)))
+            stickerid = randint(1,430)
+            line_bot_api.reply_message(event.reply_token,[TextSendMessage(text=str(res)),StickerSendMessage(package_id='1', sticker_id=str(stickerid))])
         elif words[1].upper() == "EXCHANGE":
             currencies = "USD GBP EUR JPY HKD MYR SGD BND PHP IDR INR CHF AUD NZD CAD SEK DKK NOK CNY MXN ZAR KRW TWD KWD SAR AED MMK BDT CZK KHR KES LAK RUB VND EGP PLN LKR IQD BHD OMR JOD QAR MVR PGK ILS HUF PKR"
             if not(words[2].upper() in currencies):
                 cur = " สหรัฐอเมริกา USD\n สหราชอาณาจักร GBP\n ยูโรโซน EUR\n ญี่ปุ่น(ต่อ 100เยน) JPY\n ฮ่องกง HKD\n มาเลเซีย MYR\n สิงคโปร์ SGD\n บรูไน BND\n ฟิลิปปินส์ PHP\n อินโดนิเซีย(ต่อ 1000 รูเปีย) IDR\n อินเดีย INR\n สวิตเซอร์แลนด์ CHF\n ออสเตรเลีย AUD\n นิวซีแลนด์ NZD\n แคนนาดา CAD\n สวีเดน SEK\n เดนมาร์ก DKK\n นอร์เวย์ NOK\n จีน CNY\n เม็กซิโก MXN\n แอฟริกาใต้ ZAR\n เกาหลีใต้ KRW\n ไต้หวัน TWD\n คูเวต KWD\n ซาดุดิอาระเบีย SAR\n สหรัฐอาหรับเอมิเรตส์ AED\n พม่า MMK\n บังกลาเทศ BDT\n สาธารณรัฐเช็ก CZK\n กัมพูชา(ต่อ 100 เรียล) KHR\n เคนยา KES\n ลาว(ต่อ 100 กีบ) LAK\n รัสเซีย RUB\n เวียดนาม(ต่อ 100 ดอง) VND\n อียิปต์ EGP\n โปแลนด์ PLN\n ศรีลังกา LKR\n อีรัก IQD\n บาห์เรน BHD\n โอมาน OMR\n จอร์แดน JOD\n กาตาร์ QAR\n มัลดีฟล์ MVR\n เนปาล NPR\n ปาปัวนิวกินี PGK\n อิสราเอล ILS\n ฮังการี HUF\n ปากีสถาน PKR\n"
-                line_bot_api.reply_message(event.reply_token,TextSendMessage(text='สกุลเงิน ที่ใช้ได้ 3 ตัวอักษร:\n'+ str(cur)))
+                stickerid = randint(1,430)
+                line_bot_api.reply_message(event.reply_token,[TextSendMessage(text='สกุลเงิน ที่ใช้ได้ 3 ตัวอักษร:\n'+ str(cur)),,StickerSendMessage(package_id='1', sticker_id=str(stickerid))])
             else:
                 searchtext = words[2]
                 res = exchange(searchtext.upper())
-                line_bot_api.reply_message(event.reply_token,TextSendMessage(text=str(res)))
+                stickerid = randint(1,430)
+                line_bot_api.reply_message(event.reply_token,[TextSendMessage(text=str(res)),StickerSendMessage(package_id='1', sticker_id=str(stickerid))])
         else:
-            line_bot_api.reply_message(event.reply_token,TextSendMessage(text='คำขอไม่ถูกต้อง'))
+            line_bot_api.reply_message(event.reply_token,[TextSendMessage(text='คำขอไม่ถูกต้อง'),StickerSendMessage(package_id='4', sticker_id='295')])
             
 @handler.add(JoinEvent)
 def handle_join(event):
