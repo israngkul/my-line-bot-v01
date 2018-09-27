@@ -163,7 +163,7 @@ def handle_message(event):
                 line_bot_api.reply_message(event.reply_token,TextSendMessage(text='สกุลเงิน ที่ใช้ได้ 3 ตัวอักษร:\n'+ str(cur)))
             searchtext = words[2]
             res = exchange(searchtext)
-            line_bot_api.reply_message(event.reply_token,TextSendMessage(text=str(res))
+            line_bot_api.reply_message(event.reply_token,TextSendMessage(text=str(res)))
         else:
             line_bot_api.reply_message(event.reply_token,TextSendMessage(text='คำขอไม่ถูกต้อง'))
             
