@@ -83,7 +83,7 @@ def exchange(currency):
     res = conn.getresponse()
     data = res.read()
     rate = json.loads(data)
-    #print(data.decode("utf-8"))
+    linenotify(str(data.decode("utf-8")))
     resulttext = "\nTime Stamp :"+str(rate['result']['timestamp'])+"\n"
     resulttext = resulttext+ str(rate['result']['data']['data_header']['report_name_th'])+"\n"
     resulttext = resulttext+ str(rate['result']['data']['data_header']['report_uoq_name_th'])+"\n"
@@ -98,7 +98,7 @@ def exchange(currency):
     # อัตราขายถั่วเฉลี่ยถ่วงน้ำหนักระหว่างธนาคาร
     resulttext = resulttext+ "อัตราขายถั่วเฉลี่ยถ่วงน้ำหนักระหว่างธนาคาร Mid Rate: "+str(rate['result']['data']['data_detail'][0]['mid_rate'])+"\n"
     return(resulttext)
-                                               
+
 app = Flask(__name__)
 
 line_bot_api = LineBotApi('LtooZVH2hypDa0NM8b4hy/Cj9tTxaS5WkMnRk959IKbL/8lH80juoRcRV263I3/uj18hz6RShvplHeXFmP5kHLM514LJyQ5gq53gmOmOY1VtN1P8X3FVTl9FkGH8C7ptSnAissMNCs3bgWTe4voeEQdB04t89/1O/w1cDnyilFU=')
