@@ -77,7 +77,7 @@ def weather(city):
         return(resulttext)
 
 def exchange(currency):
-    linenotify("Currency Called")
+    #linenotify("Currency Called")
     t = datetime.date.today()-datetime.timedelta(1)
     conn = http.client.HTTPSConnection("apigw1.bot.or.th")
     headers = {'x-ibm-client-id': "fece3acb-3332-4d9f-8fd0-8598740c684b",'accept': "application/json"}
@@ -85,7 +85,7 @@ def exchange(currency):
     res = conn.getresponse()
     data = res.read()
     rate = json.loads(data)
-    linenotify(str(data.decode("utf-8")))
+    #linenotify(str(data.decode("utf-8")))
     resulttext = "\nTime Stamp :"+str(rate['result']['timestamp'])+"\n"
     resulttext = resulttext+ str(rate['result']['data']['data_header']['report_name_th'])+"\n"
     resulttext = resulttext+ str(rate['result']['data']['data_header']['report_uoq_name_th'])+"\n"
