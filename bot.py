@@ -63,7 +63,7 @@ def weather(city):
             resulttext = resulttext+"อุณหภูมิสูงสุด : "+str(item['Observe']['MaxTemperature']['Value']) +" "+str(item['Observe']['MaxTemperature']['Unit'])+"\n"
             resulttext = resulttext+"อุณหภูมิต่ำสุด : "+str(item['Observe']['MinTemperature']['Value']) +" "+str(item['Observe']['MinTemperature']['Unit'])+"\n"
             resulttext = resulttext+"ปริมาณน้ำฝน : "+str(item['Observe']['Rainfall']['Value']) +" "+str(item['Observe']['Rainfall']['Unit'])+"\n"
-            resulttext = resulttext+"ความเร็วลม : "+str(item['Observe']['WindSpeed']['Value']) +" "+str(item['Observe']['WindSpeed']['Unit'])+"  "
+            resulttext = resulttext+"ความเร็วลม : "+str(item['Observe']['WindSpeed']['Value']) +" "+str(item['Observe']['WindSpeed']['Unit'])+"\n"
             resulttext = resulttext+"ทิศทางลม : "+str(item['Observe']['WindDirection']['Value']) +" "+str(item['Observe']['WindDirection']['Unit'])+"\n"
             resulttext = resulttext+"ความชื้นสัมพัทธ์ : "+str(item['Observe']['RelativeHumidity']['Value']) +" "+str(item['Observe']['RelativeHumidity']['Unit'])+"\n"
             found = True
