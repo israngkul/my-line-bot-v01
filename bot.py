@@ -153,12 +153,6 @@ def webhook():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-<<<<<<< HEAD
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text='BOT say:'+event.message.text))
-    
-=======
     global body
     result = json.loads(body)
     user_id = result['events'][0]['source']['userId']
@@ -203,7 +197,6 @@ def handle_message(event):
         else:
             line_bot_api.reply_message(event.reply_token,[TextSendMessage(text='คำขอไม่ถูกต้อง'),StickerSendMessage(package_id='4', sticker_id='295')])
             
->>>>>>> 3317b6f2958e95d1ef791f4dd4eac63ec750cdd2
 @handler.add(JoinEvent)
 def handle_join(event):
     wplog.logger.info("Got join event")
